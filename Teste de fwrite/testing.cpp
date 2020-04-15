@@ -5,7 +5,7 @@ using namespace std;
 
 int main(){
     FILE *documento;
-    char str[] = "Alguma frase mucho louka por aqui!\n";
+    char str[] = "Alguma frase mucho louka por aqui!/n";
     documento = fopen("texto.txt","w");
     fwrite(str, 1, sizeof(str), documento);
     fclose(documento);
