@@ -9,7 +9,7 @@ int main(){
     cout << "Entre com um nome para o arquivo: ";
     cin >> str;
 
-    if(!(documento = fopen(str,"w"))){
+    if(!(documento = fopen(str,"a"))){
         cout << "Erro! Impossível abrir o arquivo!" << endl;
         exit(1);
     }
