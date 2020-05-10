@@ -17,7 +17,9 @@ int main ()
      {
         fsetpos (pFile,&pos);
         c = fgetc (pFile);
-        printf ("2nd character is %c\n",c);
+        printf ("%i", n+2);
+        printf ("nd character is %c\n",c);
+        fgetpos (pFile,&pos);
      }
      fclose (pFile);
    }
