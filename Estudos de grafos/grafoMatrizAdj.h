@@ -38,7 +38,7 @@ Digrafo* iniciaDigrafo(int nVertices){
 static int lbl[maxV];
 
 void caminho(Digrafo* g, Vertice v);
-
+// é O(v^2)
 int existeCaminho(Digrafo* g, Vertice s, Vertice t){
     Vertice v;
     for(v = 0; v < g->nVertices; v++){
@@ -48,7 +48,7 @@ int existeCaminho(Digrafo* g, Vertice s, Vertice t){
     if(lbl[t] == -1) return -1;
     else return 1;
 }
-
+// é O(v^2)
 void caminho(Digrafo* g, Vertice v){
     Vertice w;
     lbl[v] = 0;
@@ -59,4 +59,27 @@ void caminho(Digrafo* g, Vertice v){
             }
         }
     }
+}
+
+//segunda versão do "existe caminho"
+int caminho2(Digrafo *g, Vertice v, Vertice t);
+int existeCaminho2(Digrafo *g, Vertice s, Vertice t){
+    Vertice v;
+    for(v = 0; v < g->nVertices; v++){
+        lbl[v] = -1;
+    }
+    return caminho2(g,s,t);
+}
+int caminho2(Digrafo *g, Vertice v, Vertice t){
+    Vertice w;
+    lbl[v] = 0;
+    if(v==t) return 1; // cheguei
+    for(w = 0; w < g-> nVertices; w++){
+        if(g-> matrizAdj[v][w] == 1 && lbl[w] == -1){
+            if(caminho2(g,v,w)){
+                return 1;
+            }
+        }
+    }
+    return 0; // não chegou no t
 }
