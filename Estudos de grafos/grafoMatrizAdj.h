@@ -1,11 +1,18 @@
+#include "funcoesAuxiliares.cpp"
 #define Vertice int
 #define Aresta Arco
-#define digrafo *Digrafo
+
 
 typedef struct {
     Vertice v;
     Vertice w;
 } Arco;
+
+typedef struct Digrafo {
+    int nVertices;
+    int nArcos;
+    int ** matrizAdj;
+}Digrafo;
 
 Arco fazArco(Vertice v, Vertice w){
     Arco arco;
@@ -14,13 +21,15 @@ Arco fazArco(Vertice v, Vertice w){
     return arco;
 }
 
-Aresta fazAresta(Vertice v, Vertice w){
+void fazAresta(Vertice v, Vertice w){
     fazArco(v,w);
     fazArco(w,v);
 }
 
-typedef struct Digrafo {
-    int nVertices;
-    int nArcos;
-    int ** matrizAdj;
-};
+Digrafo* iniciaDigrafo(int nVertices){
+    Digrafo* g = (Digrafo*)malloc(sizeof(Digrafo));
+    g->nVertices = nVertices;
+    g->nArcos = 0; 
+    g->matrizAdj = alocaMatriz(nVertices,nVertices,0);
+    return g;
+}
