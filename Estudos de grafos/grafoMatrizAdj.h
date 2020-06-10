@@ -33,3 +33,30 @@ Digrafo* iniciaDigrafo(int nVertices){
     g->matrizAdj = alocaMatriz(nVertices,nVertices,0);
     return g;
 }
+
+#define maxV 30
+static int lbl[maxV];
+
+void caminho(Digrafo* g, Vertice v);
+
+int existeCaminho(Digrafo* g, Vertice s, Vertice t){
+    Vertice v;
+    for(v = 0; v < g->nVertices; v++){
+        lbl[v] = -1;
+    }
+    caminho(g,s);
+    if(lbl[t] == -1) return -1;
+    else return 1;
+}
+
+void caminho(Digrafo* g, Vertice v){
+    Vertice w;
+    lbl[v] = 0;
+    for(w = 0; w < g->nVertices; w++){
+        if(g-> matrizAdj[v][w] == 1){
+            if(lbl[w] == -1) {
+                caminho(g, w);
+            }
+        }
+    }
+}
