@@ -83,3 +83,36 @@ int caminho2(Digrafo *g, Vertice v, Vertice t){
     }
     return 0; // não chegou no t
 }
+
+// versão iterativa
+int existeCaminhoIterativo(Digrafo *g, Vertice s, Vertice t){
+    Vertice v, w;
+    Vertice arrayCaminho[maxV];
+    int k;
+    for(v = 0; v < g->nVertices; v++){
+        lbl[v] = -1;
+    }
+    lbl[s] = 0;
+    arrayCaminho[0] = s;
+
+    k = 1;
+    v = s;
+    w = 0;
+
+    while(k!=1 || w!= g->nVertices){
+        if(w == g->nVertices){
+            w = v + 1;
+            k--;
+            v = arrayCaminho[k-1];
+        }else if(g->matrizAdj[v][w] == 1 && lbl[w] == -1){
+            lbl[w] = 0;
+            v = w;
+            arrayCaminho[k] = w;
+            w = 0;
+        }else {
+            w++;
+        }
+    }
+    if(lbl[t] == - 1) return 0;
+    return 1;
+}
