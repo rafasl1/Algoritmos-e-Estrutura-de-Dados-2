@@ -2,6 +2,9 @@
 #include <iostream>
 #define Vertice int
 #define Aresta Arco
+#define maxV 30
+static int lbl[maxV];
+static int pai[maxV];
 
 typedef struct no* link;
 
@@ -56,3 +59,14 @@ void mostraDig(DigrafoLA dig){
     }
 }
 
+// consumo de tempo O(v + a), enquanto que para matriz de adj é O(v^2)
+void caminhoLA(DigrafoLA dig, Vertice v){
+    link p;
+    lbl[v] = 0;
+    for(p = dig->adj[v]; p != NULL; p = p->prox){
+        if(lbl[p->w] == -1){
+            pai[p->w] = v;
+            caminhoLA(dig,p->w);
+        }
+    }
+}

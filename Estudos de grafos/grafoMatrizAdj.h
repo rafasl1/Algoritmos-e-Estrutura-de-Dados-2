@@ -144,6 +144,7 @@ int existeCaminhoComArb(Digrafo* g, Vertice s, Vertice t){
     return 1;
 }
 
+//CAMINHO COM ARBORECÊNCIA
 void caminhoComArb(Digrafo* g, Vertice v){
     Vertice w;
     for(w = 0; w < g->nVertices; w++){
@@ -165,4 +166,34 @@ int st_caminho(Digrafo * g, Vertice s, Vertice t){
     }
     if(w!=s) return 0;
     return 1;
+}
+
+
+// BUSCA EM PROFUNDIDADE 
+
+int contador;
+
+void dfsR(Digrafo *dig, Vertice v){
+    Vertice w;
+    lbl[v] = contador++;
+    for(w = 0; w < dig->nVertices; w++){
+        if(dig->matrizAdj[v][w] != 0){
+            if(lbl[w] == -1){
+                dfsR(dig,w);
+            }
+        }
+    }
+}
+
+void DIGRAPHdfs(Digrafo* dig){
+    Vertice v;
+    contador = 0;
+    for(v = 0; v < dig-> nVertices; v++){
+        lbl[v] = -1;
+    }
+    for(v = 0; v < dig->nVertices; v++){
+        if(lbl[v] == -1){
+            dfsR(dig,v);
+        }
+    }
 }
