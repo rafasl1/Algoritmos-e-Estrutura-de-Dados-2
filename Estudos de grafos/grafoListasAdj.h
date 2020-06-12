@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <iostream>
 #define Vertice int
 #define Aresta Arco
 
@@ -42,5 +43,16 @@ void insereArco(DigrafoLA dig, Vertice v, Vertice w){
     }
     dig->adj[v] = NOVO(w,dig->adj[v]);
     dig->A++;
+}
+
+void mostraDig(DigrafoLA dig){
+    Vertice v;
+    link p;
+    for(v = 0; v < dig->V; v++){
+        printf("%2d:", v);
+        for(p = dig->adj[v]; p != NULL; p=p->prox){
+            printf("%2d", p->w);
+        } printf("\n");
+    }
 }
 
