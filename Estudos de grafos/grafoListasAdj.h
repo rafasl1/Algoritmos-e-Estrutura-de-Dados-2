@@ -70,3 +70,30 @@ void caminhoLA(DigrafoLA dig, Vertice v){
         }
     }
 }
+
+
+//BUSCA EM PROFUNDIDADE
+int contador;
+
+void dfsR(DigrafoLA dig, Vertice v){
+    link p;
+    lbl[v] = contador++;
+    for(p = dig->adj[v]; p!= NULL; p=p->prox){
+        if(lbl[p->w == -1]){
+            dfsR(dig,p->w);
+        }
+    }
+}
+// é TETA(V + A)
+void DIGRAPHdfs(DigrafoLA dig){
+    Vertice v;
+    contador = 0;
+    for(v = 0; v < dig-> V; v++){
+        lbl[v] = -1;
+    }
+    for(v = 0; v < dig->V; v++){
+        if(lbl[v] == -1){
+            dfsR(dig,v);
+        }
+    }
+}

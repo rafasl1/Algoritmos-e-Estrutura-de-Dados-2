@@ -184,7 +184,7 @@ void dfsR(Digrafo *dig, Vertice v){
         }
     }
 }
-
+// é TETA(V^2)
 void DIGRAPHdfs(Digrafo* dig){
     Vertice v;
     contador = 0;
