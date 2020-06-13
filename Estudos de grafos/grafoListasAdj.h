@@ -97,3 +97,33 @@ void DIGRAPHdfs(DigrafoLA dig){
         }
     }
 }
+
+// ALGORITMOS DE BUSCA EM PROFUNDIDADE COM DESCOBRIMENTO E FINALIZAÇÃO
+static int tempo, descobrimento[maxV], finalizacao[maxV];
+
+void dfsRComPassos(DigrafoLA dig, Vertice v){
+    link p;
+    descobrimento[v] = tempo++;
+    for(p = dig->adj[v]; p ; p=p->prox){
+        if(descobrimento[p->w] == -1){
+            pai[p->w] = v; // tava errado no slide (?)
+            dfsRComPassos(dig,p->w);
+        }
+    }
+    finalizacao[v] = tempo++;
+}
+
+void buscaEmProf(DigrafoLA dig){
+    Vertice v;
+    tempo = 0;
+    for(int v = 0; v < dig->V; v++){
+        pai[v] = -1;
+        descobrimento[v] = -1;
+        finalizacao[v] = -1;
+    }
+    for(v = 0; v < dig->V; v++){
+        if(descobrimento[v] == -1){
+            dfsRComPassos(dig,v);
+        }
+    }
+}
