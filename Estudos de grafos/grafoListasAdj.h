@@ -71,8 +71,23 @@ void caminhoLA(DigrafoLA dig, Vertice v){
     }
 }
 
+int temCaminhoLA(DigrafoLA dig, Vertice s, Vertice t){
+    Vertice v;
+    for(v = 0; v < dig->V; v++){
+        lbl[v] = -1;
+        pai[v] = -1;
+    }
+    pai[s] = s;
+    caminhoLA(dig,s);
+    if(lbl[t] == -1) return 0;
+    return 1;
+}
+
+
+
 
 //BUSCA EM PROFUNDIDADE
+
 int contador;
 
 void dfsR(DigrafoLA dig, Vertice v){
@@ -98,7 +113,12 @@ void DIGRAPHdfs(DigrafoLA dig){
     }
 }
 
-// ALGORITMOS DE BUSCA EM PROFUNDIDADE COM DESCOBRIMENTO E FINALIZAÇÃO
+
+
+
+
+//ALGORITMOS DE BUSCA EM PROFUNDIDADE COM DESCOBRIMENTO E FINALIZAÇÃO
+
 static int tempo, descobrimento[maxV], finalizacao[maxV];
 
 void dfsRComPassos(DigrafoLA dig, Vertice v){
@@ -126,4 +146,67 @@ void buscaEmProf(DigrafoLA dig){
             dfsRComPassos(dig,v);
         }
     }
+}
+
+
+
+
+
+
+
+//VERIFICA SE O GRAFO TEM UM CICLO COMPOSTO POR ALGUMA DE SUAS ARESTAS
+
+
+/*  PRIMEIRA VERSÃO
+    CONSUMO DE TEMPO : O (A(V + A)), ENQUANTO PRA MATRIZ DE ADJ SERIA O (AV^2)
+*/
+
+int temCiclo(DigrafoLA dig){
+    Vertice v;
+    link p;
+    int resposta;
+    for(v = 0; v < dig->V; v++){
+        for(p = dig->adj[v]; p ; p=p->prox){
+            resposta = temCaminhoLA(dig, p->w, v);
+            if(resposta == 1) return 1;
+        }
+    }
+    return 0;
+}
+
+
+/*  SEGUNDA VERSÃO
+    CONSUMO O(V + A) ENQUANTO PARA MATRIZES DE ADJACENCIA SERIA O (V^2)
+*/
+
+int cicloTop(DigrafoLA dig, Vertice v){
+    Vertice w;
+    link p;
+    descobrimento[v] = tempo++;
+    for(p = dig->adj[v]; p ; p = p->prox){
+        w = p->w;
+        if(descobrimento[w] == -1){
+            pai[w] = v;
+            if(cicloTop(dig,w) == 1) return 1;
+        }else if(finalizacao[w] == -1) return 1;
+    }
+    finalizacao[v] = tempo++;
+    return 0;
+}
+
+int temCicloTop(DigrafoLA dig){
+    Vertice v;
+    tempo = 0;
+    for(v = 0; v < dig->V; v++){
+        descobrimento[v] = -1;
+        finalizacao[v] = -1;
+        pai[v] = -1;
+    }
+    for(v = 0; v < dig->V; v++){
+        if(descobrimento[v] == -1){
+            pai[v] = v;
+            if(cicloTop(dig,v) == 1) return 1;
+        }
+    }
+    return 0;
 }
