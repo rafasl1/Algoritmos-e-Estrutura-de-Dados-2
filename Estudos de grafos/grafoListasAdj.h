@@ -179,7 +179,7 @@ int temCiclo(DigrafoLA dig){
     CONSUMO O(V + A) ENQUANTO PARA MATRIZES DE ADJACENCIA SERIA O (V^2)
 */
 
-int cicloTop(DigrafoLA dig, Vertice v){
+   int cicloTop(DigrafoLA dig, Vertice v){
     Vertice w;
     link p;
     descobrimento[v] = tempo++;

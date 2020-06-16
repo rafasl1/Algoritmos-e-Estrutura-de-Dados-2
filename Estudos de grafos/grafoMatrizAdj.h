@@ -120,7 +120,7 @@ int existeCaminhoIterativo(Digrafo *g, Vertice s, Vertice t){
 // faz o s-t corte
 int st_corte(Digrafo *g, Vertice s, Vertice t){
     Vertice v, w;
-    if(lbl[s] == -1 || lbl[t] = 0) return 0;
+    if((lbl[s] == -1) || lbl[t] == 0) return 0;
     for(v = 0; v < g->nVertices; v++){
         for(w = 0; w < g-> nVertices; w++){
             if(g->matrizAdj[v][w] == 1 && (lbl[v] = 0 && lbl[w] == -1)) return 0;
@@ -132,6 +132,7 @@ int st_corte(Digrafo *g, Vertice s, Vertice t){
 // verifica se há caminho e devolve junto a arborecência
 static int pai[maxV];
 void caminhoComArb(Digrafo* g, Vertice v);
+
 int existeCaminhoComArb(Digrafo* g, Vertice s, Vertice t){
     Vertice v;
     for(v = 0; v < g->nVertices; v++){
@@ -147,6 +148,7 @@ int existeCaminhoComArb(Digrafo* g, Vertice s, Vertice t){
 //CAMINHO COM ARBORECÊNCIA
 void caminhoComArb(Digrafo* g, Vertice v){
     Vertice w;
+    lbl[v] = 0;
     for(w = 0; w < g->nVertices; w++){
         if(g->matrizAdj[v][w] == 1){
             if(lbl[w] == -1){
@@ -157,6 +159,7 @@ void caminhoComArb(Digrafo* g, Vertice v){
     }
 }
 
+// devolve 1 se t-pai[t]-pai[pai[t]]-... é um caminho reverso de um caminho s -t 
 int st_caminho(Digrafo * g, Vertice s, Vertice t){
     Vertice v, w;
     if(pai[t] == -1) return 0;
